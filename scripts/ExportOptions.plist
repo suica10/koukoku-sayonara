@@ -7,14 +7,9 @@
 	<key>teamID</key>
 	<string>F8X8H9J6AY</string>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
-	<key>provisioningProfiles</key>
-	<dict>
-		<key>jp.onejpkey.KoukokuSayonara</key>
-		<string>KoukokuSayonara AppStore</string>
-	</dict>
 	<key>manageAppVersionAndBuildNumber</key>
 	<false/>
 	<key>uploadBitcode</key>
