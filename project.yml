@@ -20,7 +20,8 @@ targets:
     entitlements:
       path: App/KoukokuSayonara.entitlements
       properties:
-        com.apple.developer.networking.dns-settings: true
+        com.apple.developer.networking.networkextension:
+          - dns-settings
     info:
       path: App/Info.plist
       properties:
