@@ -1,0 +1,30 @@
+# AdGuard Home config template — deploy.sh が実値を埋めて配置する
+bind_host: 127.0.0.1
+bind_port: 3000
+dns:
+  bind_hosts:
+    - 127.0.0.1
+  port: 3053
+  upstream_dns:
+    - https://dns.cloudflare.com/dns-query
+    - https://dns.google/dns-query
+  bootstrap_dns:
+    - 1.1.1.1
+    - 8.8.8.8
+filtering:
+  filtering_enabled: true
+  filters_update_interval_hours: 12
+user_rules: []
+filters:
+  - enabled: true
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
+    name: AdGuard DNS filter
+    id: 1
+  - enabled: true
+    url: https://small.oisd.nl/
+    name: OISD small
+    id: 2
+  - enabled: true
+    url: https://280blocker.net/files/280blocker_adblock.txt
+    name: 280blocker
+    id: 3
