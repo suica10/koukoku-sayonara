@@ -27,10 +27,8 @@ final class DNSManager: ObservableObject {
             try await manager.loadFromPreferences()
             let doh = NEDNSOverHTTPSSettings(servers: Self.dohBootstrap)
             doh.serverURL = Self.dohURL
-            let settings = NEDNSSettings(servers: Self.dohBootstrap)
-            settings.dnsSettings = doh
-            settings.onDemandRules = [NEOnDemandRuleConnect()]
-            manager.dnsSettings = settings
+            manager.dnsSettings = doh
+            manager.onDemandRules = [NEOnDemandRuleConnect()]
             try await manager.saveToPreferences()
             isEnabled = true
             statusText = "広告ブロック中"
