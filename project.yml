@@ -1,0 +1,45 @@
+name: KoukokuSayonara
+options:
+  bundleIdPrefix: jp.onejpkey
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: F8X8H9J6AY
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "Apple Distribution"
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+targets:
+  KoukokuSayonara:
+    type: application
+    platform: iOS
+    sources:
+      - App
+    entitlements:
+      path: App/KoukokuSayonara.entitlements
+      properties:
+        com.apple.developer.networking.dns-settings: true
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: "広告さよなら"
+        UILaunchStoryboardName: ""
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UIRequiredDeviceCapabilities:
+          - armv7
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.onejpkey.KoukokuSayonara
+        PROVISIONING_PROFILE_SPECIFIER: "KoukokuSayonara AppStore"
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
+schemes:
+  KoukokuSayonara:
+    build:
+      targets:
+        KoukokuSayonara: all
+    archive:
+      config: Release
