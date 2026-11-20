@@ -31,10 +31,13 @@ jobs:
           DIST_CERT_P12_BASE64: ${{ secrets.DIST_CERT_P12_BASE64 }}
           DIST_CERT_PASSWORD: ${{ secrets.DIST_CERT_PASSWORD }}
           ASC_PRIVATE_KEY_P8: ${{ secrets.ASC_PRIVATE_KEY_P8 }}
+          PROFILE_APP_BASE64: ${{ secrets.PROFILE_APP_BASE64 }}
         run: |
           set -euo pipefail
           mkdir -p build/signing ~/private_keys \
             ~/Library/MobileDevice/"Provisioning Profiles"
+          printf %s "$PROFILE_APP_BASE64" | base64 --decode \
+            > ~/Library/MobileDevice/"Provisioning Profiles"/ks-appstore-ne.mobileprovision
           printf %s "$ASC_PRIVATE_KEY_P8" > ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
           chmod 600 ~/private_keys/AuthKey_${ASC_KEY_ID}.p8
           printf %s "$DIST_CERT_P12_BASE64" | base64 --decode > build/signing/dist.p12
@@ -85,10 +88,6 @@ jobs:
             -archivePath build/KoukokuSayonara.xcarchive \
             -exportOptionsPlist scripts/ExportOptions.plist \
             -exportPath build/export \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath ~/private_keys/AuthKey_${ASC_KEY_ID}.p8 \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             | tee build/export.log
           ls -la build/export
       - name: Upload to App Store Connect
