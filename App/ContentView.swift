@@ -3,6 +3,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var dns = DNSManager()
     @State private var showPlan = false
+    @State private var showSetupGuide = false
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         VStack(spacing: 32) {
@@ -12,14 +14,26 @@ struct ContentView: View {
             Text(dns.statusText)
                 .foregroundStyle(.secondary)
             Button {
-                Task { dns.isEnabled ? await dns.disable() : await dns.enable() }
+                Task {
+                    if dns.isRegistered {
+                        await dns.disable()
+                    } else {
+                        let result = await dns.enable()
+                        if result == .registeredNotSelected {
+                            showSetupGuide = true
+                        }
+                    }
+                }
             } label: {
-                Text(dns.isEnabled ? "DNSを解除する" : "DNSを登録する")
+                Text(dns.isRegistered ? "DNSを解除する" : "DNSを登録する")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
             }
             .buttonStyle(.borderedProminent)
+            if dns.state == .registeredNotSelected {
+                Button("設定方法を見る") { showSetupGuide = true }
+            }
             Button {
                 showPlan = true
             } label: {
@@ -33,6 +47,14 @@ struct ContentView: View {
         }
         .padding(24)
         .task { await dns.refresh() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { Task { await dns.refresh() } }
+        }
+        .alert("あと1ステップで有効になります", isPresented: $showSetupGuide) {
+            Button("OK") {}
+        } message: {
+            Text("設定アプリを開き、「一般」→「VPNとデバイス管理」→「DNS」で「広告さよなら」を選んでください。選ぶまで広告ブロックは始まりません。")
+        }
         .sheet(isPresented: $showPlan) {
             VStack(spacing: 16) {
                 Text("プランは準備中です")
