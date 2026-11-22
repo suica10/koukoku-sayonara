@@ -25,7 +25,7 @@ struct ContentView: View {
                     }
                 }
             } label: {
-                Text(dns.isRegistered ? "DNSを解除する" : "DNSを登録する")
+                Text(dns.isRegistered ? "広告ブロックOFF" : "広告ブロックON")
                     .font(.title3.bold())
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
@@ -43,7 +43,7 @@ struct ContentView: View {
                     .padding(.vertical, 18)
             }
             .buttonStyle(.bordered)
-            Text("一部のアプリ内広告はブロックできません。ブロック中に表示できなくなるサイトもあります。その場合はDNSを解除してください。")
+            Text("一部のアプリ内広告はブロックできません。ブロック中に表示できなくなるサイトもあります。その場合は広告ブロックをOFFにしてください。")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
