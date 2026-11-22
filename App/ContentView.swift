@@ -43,6 +43,10 @@ struct ContentView: View {
                     .padding(.vertical, 18)
             }
             .buttonStyle(.bordered)
+            Text("一部のアプリ内広告はブロックできません。ブロック中に表示できなくなるサイトもあります。その場合はDNSを解除してください。")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
             Spacer()
         }
         .padding(24)
