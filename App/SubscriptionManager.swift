@@ -8,6 +8,7 @@ final class SubscriptionManager: ObservableObject {
     @Published var isEntitled = false
     @Published var statusText = "未加入"
     @Published var isPurchasing = false
+    private var trialEligible = false
 
     private var updatesTask: Task<Void, Never>?
 
@@ -24,12 +25,15 @@ final class SubscriptionManager: ObservableObject {
 
     func load() async {
         product = try? await Product.products(for: [Self.productID]).first
+        if let subscription = product?.subscription {
+            trialEligible = subscription.isEligibleForIntroOffer
+        }
         await refreshEntitlement()
     }
 
     func refreshEntitlement() async {
         var entitled = false
-        var text = "未加入"
+        var text = trialEligible ? "未加入（1週間トライアル無料）" : "未加入"
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result,
                   transaction.productID == Self.productID,
