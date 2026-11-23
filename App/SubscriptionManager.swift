@@ -26,7 +26,7 @@ final class SubscriptionManager: ObservableObject {
     func load() async {
         product = try? await Product.products(for: [Self.productID]).first
         if let subscription = product?.subscription {
-            trialEligible = subscription.isEligibleForIntroOffer
+            trialEligible = await subscription.isEligibleForIntroOffer
         }
         await refreshEntitlement()
     }
