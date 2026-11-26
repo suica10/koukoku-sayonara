@@ -110,6 +110,11 @@ struct PlanView: View {
                     Task { await sub.restore() }
                 }
             }
+            HStack(spacing: 24) {
+                Link("利用規約", destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula")!)
+                Link("プライバシーポリシー", destination: URL(string: "https://onejpkey.com/koukoku-privacy.html")!)
+            }
+            .font(.footnote)
             Button("閉じる") { onClose() }
                 .padding(.top, 8)
         }
