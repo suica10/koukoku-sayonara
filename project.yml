@@ -17,6 +17,8 @@ targets:
     platform: iOS
     sources:
       - App
+      - path: App/PrivacyInfo.xcprivacy
+        buildPhase: resources
     entitlements:
       path: App/KoukokuSayonara.entitlements
       properties:
